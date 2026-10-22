@@ -1,11 +1,11 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { profile, milestones, media, publications } from "./content";
 type Page = "home" | "about" | "career" | "media" | "bookings" | "contact";
 const labels: Record<Page,string> = {home:"Home",about:"About",career:"Career & Legacy",media:"Media",bookings:"Bookings",contact:"Contact"};
 const routes: Record<Page,string> = {home:"/",about:"/about",career:"/career",media:"/media",bookings:"/bookings",contact:"/contact"};
 function fromPath(path:string):Page | "missing" { const match=(Object.keys(routes) as Page[]).find(k=>routes[k]===path.replace(/\/$/,"") || (k==="home"&&path==="/"));return match??"missing"; }
 function Portrait({label="Portrait awaiting approval",wide=false}:{label?:string;wide?:boolean}){return <div className={wide?"photo-slot wide":"photo-slot"} role="img" aria-label={label}><span className="photo-monogram">CH</span><span className="photo-caption">{label}</span></div>;}
-function ArrowLink({to,children,go}:{to:Page;children:React.ReactNode;go:(p:Page)=>void}){return <a href={routes[to]} onClick={e=>{e.preventDefault();go(to);}} className="text-link">{children}<span aria-hidden="true">↗</span></a>;}
+function ArrowLink({to,children,go}:{to:Page;children:ReactNode;go:(p:Page)=>void}){return <a href={routes[to]} onClick={e=>{e.preventDefault();go(to);}} className="text-link">{children}<span aria-hidden="true">↗</span></a>;}
 function Inquiry({kind}:{kind:"contact"|"bookings"}) {
  const [status,setStatus]=useState("");
  const submit=(e:FormEvent<HTMLFormElement>)=>{e.preventDefault();setStatus("This is a preview. Your message has not been sent or stored. Professional contact details and backend processing must be approved before submissions can open.");};
